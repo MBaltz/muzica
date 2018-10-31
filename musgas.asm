@@ -85,9 +85,8 @@
 
 	set_key:
 	
-		# salva o valor de $ra e zera o contador de loops
+		# salva o valor de $ra 
 		add $t7, $zero, $ra
-		add $t6, $zero, $zero
 		
 		#salva argumentos na pilha
 		addi $sp, $sp, -12
@@ -108,19 +107,92 @@
 		
 		
 	primeiro:
-		#cada loop tem cerca de 30 ms
-		mul $t6, $t6, 30
 		
 		#faz aproximação e escreve o tempo da nota
 		
 		#TODO: fazer aproximação
+		
+		#
+		beq $t9, $zero, write_z
+		
+		#cada loop tem cerca de 30 ms
+		mul $t6, $t6, 30
+		
+		addi $s1, $t6, -1500
+		addi $s2, $t6, -750
+		addi $s3, $t6, -375
+		addi $s4, $t6, -187
+		addi $s5, $t6, -94
+		addi $s6, $t6, -47
+	
+		abs $s1, $s1
+		abs $s2, $s2
+		abs $s3, $s3
+		abs $s4, $s4
+		abs $s5, $s5
+		abs $s6, $s6
+		
+		
+		add $s7, $zero, $sp
+		
+		bgt $s1, $s7, prox1
+		add $s7, $zero, $s1
+	
+	prox1:
+		bgt $s2, $s7, prox2
+		add $s7, $zero, $s2
+	prox2:
+		bgt $s3, $s7, prox3
+		add $s7, $zero, $s3
+	prox3:
+		bgt $s4, $s7, prox4
+		add $s7, $zero, $s4
+	prox4:
+		bgt $s5, $s7, prox5
+		add $s7, $zero, $s5
+	prox5:
+		bgt $s6, $s7, prox6
+		add $s7, $zero, $s6
+	prox6:
+	
+	
+		#switch
+		
+	case_sb:
+		bne $s7, $s1, case_m
+		jal printSemibreve
+		j end_switch_tempo
+	case_m:
+		bne $s7, $s2, case_sm
+		jal printMinima
+		j end_switch_tempo
+	case_sm:
+		bne $s7, $s3, case_c
+		jal printSemiminima
+		j end_switch_tempo
+	case_c:
+		bne $s7, $s4, case_sc
+		jal printColcheia
+		j end_switch_tempo
+	case_sc:
+		bne $s7, $s5, case_f
+		jal printSemicolcheia
+		j end_switch_tempo
+	case_f:
+		bne $s7, $s6, end_switch_tempo
+		jal printFusa
+		j end_switch_tempo
+	
+	
+	end_switch_tempo:
+	
+	
+		add $t6, $zero, $zero
 	
 		
 				
 		################################################################################
 		
-		beq $t9, $zero, write_z
-		jal printColcheia
 		
 		#switch case
 		write_z:
@@ -228,7 +300,7 @@
 		lw $a0, 0($sp)
 		lw $a1, 4($sp)
 		lw $a2, 8($sp)
-		addi $sp, $sp, -12
+		addi $sp, $sp, 12
 		
 	
 		
@@ -345,8 +417,8 @@
 				
 		add $t8, $zero, $v0
 		
-		addi $t6, $t6, 1
 		jal set_key
+		addi $t6, $t6, 1
 			
 		#j exit_at_all
 		
