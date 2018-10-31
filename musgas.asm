@@ -103,81 +103,115 @@
 		
 		beq $t9, $t8, return_key
 		
+		#beq $t9, $zero, write_z
+		#jal printEspaco
+		
+		
+	primeiro:
 		#cada loop tem cerca de 30 ms
 		mul $t6, $t6, 30
 		
 		#faz aproximação e escreve o tempo da nota
 		
 		#TODO: fazer aproximação
+	
+		
 				
-		################################################################################	
+		################################################################################
 		
-		
+		beq $t9, $zero, write_z
+		jal printColcheia
 		
 		#switch case
 		write_z:
 			bne $t9, 122, write_s
 			jal printAcoZ
+			beq $t8, 45, end_switch
+			jal printEspaco
 			j end_switch
 		
 		write_s:
 			bne $t9, 115, write_x
 			jal printAcoS
+			beq $t8, 45, end_switch
+			jal printEspaco
 			j end_switch
 			
 		write_x:
 			bne $t9, 120, write_d
 			jal printAcoX
+			beq $t8, 45, end_switch
+			jal printEspaco
 			j end_switch
 			
 		write_d:
 			bne $t9, 100, write_c
 			jal printAcoD
+			beq $t8, 45, end_switch
+			jal printEspaco
 			j end_switch
 			
 		write_c:
 			bne $t9, 99, write_v
 			jal printAcoC
+			beq $t8, 45, end_switch
+			jal printEspaco
 			j end_switch
 			
 		write_v:
 			bne $t9, 118, write_g
 			jal printAcoV
+			beq $t8, 45, end_switch
+			jal printEspaco
 			j end_switch
 			
 		write_g:
 			bne $t9, 103, write_b
 			jal printAcoG
+			beq $t8, 45, end_switch
+			jal printEspaco
 			j end_switch
 			
 		write_b:
 			bne $t9, 98, write_h
 			jal printAcoB
+			beq $t8, 45, end_switch
+			jal printEspaco
 			j end_switch
 			
 		write_h:
 			bne $t9, 104, write_n
 			jal printAcoH
+			beq $t8, 45, end_switch
+			jal printEspaco
 			j end_switch
 			
 		write_n:
 			bne $t9, 110, write_j
 			jal printAcoN
+			beq $t8, 45, end_switch
+			jal printEspaco
 			j end_switch
 			
 		write_j:
 			bne $t9, 106, write_m
 			jal printAcoJ
+			beq $t8, 45, end_switch
+			jal printEspaco
 			j end_switch
 			
 		write_m:
 			bne $t9, 109, write_comma
 			jal printAcoM
+			beq $t8, 45, end_switch
+			jal printEspaco
 			j end_switch
 			
 		write_comma:
 			bne $t9, 44, write_none_of_above
 			jal printAcoVirgula
+			beq $t8, 45, end_switch
+			jal printEspaco
 			j end_switch
 			
 		write_none_of_above:
@@ -292,6 +326,8 @@
 		add $a2, $zero, $zero 	#ignora
 		syscall
 		add $s0, $zero, $v0 	#salva o file descriptor
+		
+		add $t9, $zero, $zero
 
 		jal printInicial
 		jal printIdentacao
