@@ -34,7 +34,7 @@
 #######################################################################################################################
 	
 	salvar_registrador:
-		add $s0, $zero, 122
+		#$s0 foi liberado, 122 foi pra $t5
 		add $s1, $zero, 120
 		add $s2, $zero, 99
 		add $s3, $zero, 118
@@ -49,7 +49,7 @@
 		
 		write_to_file:
 		
-			mul $,, $t6, 50
+			mul $t6, $t6, 30
 			
 			jr $ra
 			
@@ -69,7 +69,8 @@
 		add $t6, $zero, $zero
 		
 		check_z:
-			bne $s0, $t8, check_s
+			add $t5, $zero, 122
+			bne $t5, $t8, check_s
 			add $a0, $zero, 48
 			j put_key
 		
@@ -166,8 +167,16 @@
 				
 		add $t8, $zero, $v0
 		
-		addi $t6, $zero, 1
+		addi $t6, $t6, 1
 		jal set_key
+		
+		add $s2, $zero, $a0
+		add $a0, $zero, $t6
+		add $v0, $zero, 1
+		syscall
+		
+		add $a0, $zero, $s2
+		
 		
 		#j exit_at_all
 		
