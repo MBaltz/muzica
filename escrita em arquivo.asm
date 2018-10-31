@@ -3,7 +3,8 @@
 	nomeArquivo: .asciiz "arquivo.txt"
 
 	inicial: .asciiz "C partitura(Sol,4/4)\n" #primeira linha
-	identacao: .asciiz "\t"
+	
+	#Figuras musicais
 	semibreve: .asciiz "sb"
 	minima: .asciiz "m"
 	semiminima: .asciiz "sm"
@@ -16,6 +17,7 @@
 	mais: .asciiz "+"
 	espaco: .asciiz " "
 	quebraLinha: .asciiz "\n"
+	identacao: .asciiz "\t"
 
 	numUm: .asciiz "1"
 	numDois: .asciiz "2"
@@ -23,19 +25,19 @@
 
 
 	#Acordes:
-	acoZ: .asciiz "c3"
-	acoS: .asciiz "c#3"
-	acoX: .asciiz "d3"
-	acoD: .asciiz "d#3"
-	acoC: .asciiz "e3"
-	acoV: .asciiz "f3"
-	acoG: .asciiz "f#3"
-	acoB: .asciiz "g3"
-	acoH: .asciiz "g#3"
-	acoN: .asciiz "a3"
-	acoJ: .asciiz "a#3"
-	acoM: .asciiz "b3"
-	acoVirgula: .asciiz "c4"
+	acoZ: .asciiz "C"
+	acoS: .asciiz "C#"
+	acoX: .asciiz "D"
+	acoD: .asciiz "D#"
+	acoC: .asciiz "E"
+	acoV: .asciiz "F"
+	acoG: .asciiz "F#"
+	acoB: .asciiz "G"
+	acoH: .asciiz "G#"
+	acoN: .asciiz "A"
+	acoJ: .asciiz "A#"
+	acoM: .asciiz "B"
+	acoVirgula: .asciiz "C"
 
 
 .text
@@ -61,7 +63,7 @@
 	jal printEspaco
 	jal printFusa
 	jal printAcoVirgula
-	#scc3+1 cf3 fc4
+	#scC+1 cF fC
 
 
 	#fechar arquivo
@@ -73,9 +75,9 @@
 	
 	
 	
-#---------------------------------------
-#------------PRINT DOS COISA------------
-#---------------------------------------
+#----------------------------------------------------------
+#------------PRINT DOS FIGURAS MUSICAIS E OUTROS-----------
+#----------------------------------------------------------
 
 printInicial:
 		addi $v0, $zero, 15 	#Escreve em arquivo
