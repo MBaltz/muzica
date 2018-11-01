@@ -1,6 +1,7 @@
 .data
 
 	#-----TEMPOS-----
+	#fixo de 80 bpm
 	#semibreve: 	1500 ms
 	#minima:	750 ms
 	#semiminima:	375 ms
@@ -94,6 +95,12 @@
 
 	set_key:
 	
+		#$t9 é a ultima tecla pressionada
+		#$t8 é a tecla atualmente pressionada
+		#TODO: ver a espera da suscall para escrever duas notas seguidas de mesmo tom
+
+		beq $t9, $t8, return_key
+	
 		# salva o valor de $ra 
 		add $t7, $zero, $ra
 		
@@ -105,16 +112,6 @@
 		sw $a2, 8($sp)
 
 
-		#$t9 é a ultima tecla pressionada
-		#$t8 é a tecla atualmente pressionada
-		#TODO: ver a espera da suscall para escrever duas notas seguidas de mesmo tom
-
-		beq $t9, $t8, return_key
-
-		#beq $t9, $zero, write_z
-		#jal printEspaco
-
-
 	primeiro:
 	
 		#faz aproximação e escreve o tempo da nota
@@ -122,7 +119,7 @@
 		#TODO: fazer aproximação
 		
 		#
-		beq $t9, $zero, write_z
+		beq $t9, $zero, write_none_of_above
 		
 		#cada loop tem cerca de 30 ms
 		mul $t6, $t6, 30
@@ -427,7 +424,6 @@
 		
 		jal set_key
 		addi $t6, $t6, 1
-		#j exit_at_all
 
 		addi $v0, $zero, 31
 		syscall
